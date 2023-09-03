@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Navbar from '../components/Navbar/Navbar'
-import SideDrawer from '../components/SideDrawer/SideDrawer'
+import Navbar from '../../components/Navbar/Navbar'
+import SideDrawer from '../../components/SideDrawer/SideDrawer'
 
 const Main = () => {
     const [openDrawer, setOpenDrawer]= useState(false)

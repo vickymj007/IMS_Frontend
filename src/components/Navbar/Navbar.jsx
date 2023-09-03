@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import {InputBase} from '@mui/material'
+import { InputBase, Typography} from '@mui/material'
 import {Menu, Close,Sort} from '@mui/icons-material';
 import { Dropdown, MenuItem } from '@mui/base';
 import { InputBox, StyledAppBar, StyledDropDownMenu, StyledMenuButton, StyledToolbar } from './navbarStyles';
@@ -13,10 +13,12 @@ const Navbar = ({handleDrawer}) => {
     <div>
       <StyledAppBar position="static">
         <StyledToolbar>
+
           <div>
             <Menu onClick={handleDrawer}/>
-            <h1>IMS</h1>
+            <Typography variant='h5'>IMS</Typography>
           </div>
+
           <InputBox>
             <InputBase 
               placeholder='Search...' 
@@ -26,6 +28,7 @@ const Navbar = ({handleDrawer}) => {
             />
             <Close color='action' onClick={()=>setSearchText("")}/>
           </InputBox>
+
           <Dropdown>
             <StyledMenuButton>Sort <Sort/></StyledMenuButton>
             <StyledDropDownMenu>
@@ -35,6 +38,7 @@ const Navbar = ({handleDrawer}) => {
               <MenuItem>Lowest followers</MenuItem>
             </StyledDropDownMenu>
           </Dropdown>
+
         </StyledToolbar>
       </StyledAppBar> 
       <Outlet/>

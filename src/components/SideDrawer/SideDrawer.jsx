@@ -1,9 +1,42 @@
 import { NavigateBefore } from '@mui/icons-material'
-import { Drawer } from '@mui/material'
+import { Box, Drawer, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Typography } from '@mui/material'
+import {AddCircleOutline,ContactSupport,Info,Subject} from '@mui/icons-material';
 import React from 'react'
+import { drawerStyles } from './sideDrawerStyles';
+import { useNavigate } from 'react-router-dom';
+
+const drawerListItems = [
+    {
+        text:'Home',
+        icon:<Subject/>,
+        path:'/'
+    },
+    {
+        text:'Add Influencer',
+        icon:<AddCircleOutline/>,
+        path:'/add-influencer'
+    },
+    {
+        text:'About',
+        icon:<Info/>,
+        path:'/about'
+    },
+    {
+        text:'Contact',
+        icon:<ContactSupport/>,
+        path:'/contact'
+    },
+]
 
 const SideDrawer = ({openDrawer,setOpenDrawer}) => {
+    const navigate = useNavigate()
+
+    const handleClick = (path)=>{
+        setOpenDrawer(false)
+        navigate(path)
+    }
   return (
+
     <div>
         <Drawer 
             open={openDrawer}
@@ -12,30 +45,32 @@ const SideDrawer = ({openDrawer,setOpenDrawer}) => {
                 keepMounted:false
             }}
             variant='temporary'
-            sx={{
-            "& .MuiDrawer-paper":{
-                marginTop:"64px",
-                boxShadow:'none',
-                width:"250px",
-                background:"#31263e",
-                height:"calc(100vh - 64px)"
-                }
-            }}
+            sx={drawerStyles.drawer}
         >
-            <div>
+            <Box sx={drawerStyles.box}>
+                <Typography variant='h5'>IMS</Typography>
                 <NavigateBefore 
-                    onClick={()=>setOpenDrawer(false)} 
-                    sx={{
-                        color:"#fff",
-                        marginRight:'auto',
-                        width:'100%',
-                    }}/>
-            </div>
-            <div>
-                <p>Add Influencer</p>
-                <p>About</p>
-                <p>Contact</p>
-            </div>
+                    onClick={()=>setOpenDrawer(false)}
+                    sx={drawerStyles.close_icon}
+                />
+            </Box>
+
+            <List
+                subheader={
+                    <ListSubheader component="div">
+                    Navigate to
+                    </ListSubheader>
+                }
+            >
+                {drawerListItems.map(item =>(
+                    <ListItemButton key={item.text} onClick={()=>handleClick(item.path)}>
+                        <ListItemIcon>
+                            {item.icon}
+                        </ListItemIcon>
+                        <ListItemText primary={item.text}/>
+                    </ListItemButton>
+                ))}
+            </List>
         </Drawer>
     </div>
   )

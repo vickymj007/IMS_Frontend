@@ -25,7 +25,7 @@ export const InputBox = styled(Box)({
     maxWidth:'380px',
     width:"100%",
     "& input":{
-      color:"#bbd0ff",
+      color:"#fff",
     }
 })
 
@@ -50,7 +50,8 @@ export const StyledDropDownMenu = styled(DropDownMenu)({
     "& li":{
         cursor:'pointer',
         listStyle:'none',
-        padding:'4px 6px'
+        padding:'4px 6px',
+        color:"#fff"
     },
     "& li:hover":{
         background:"#31263e"
