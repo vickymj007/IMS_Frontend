@@ -4,6 +4,8 @@ import { Box, Button, Container, FormControl,  InputLabel, MenuItem, Select, Tex
 import './adduser.css'
 import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
 
 const initialState = {
   name:"",
@@ -22,12 +24,19 @@ const AddUser = () => {
   const handleChange = (e)=>{
     setUser({...user,[e.target.name]:e.target.value})
   }
-  const handleSubmit = (e)=>{
+  const handleSubmit = async (e)=>{
     e.preventDefault()
     if(name === "" || gender ==="" || socialMedia === "" || followers === "" || category === "") return toast.error("Please fill in all the fields")
     if(socialMedia === "@" || socialMedia[0] !== "@" ) return toast.error("Please enter a valid Social Media handler")
-    console.log(user);
-    return toast.success("Added new Influencer👍")
+    
+    try {
+      await axios.post('/api/user',user)
+
+      toast.success("Added new Influencer👍")
+      navigate('/')
+    } catch (error) {
+      toast.error(error.response.data.msg)
+    }
   }
 
   return (
