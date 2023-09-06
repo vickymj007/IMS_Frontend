@@ -1,13 +1,22 @@
 import React, { useState } from 'react'
-import { Outlet } from 'react-router-dom'
 import { InputBase, Typography} from '@mui/material'
 import {Menu, Close,Sort} from '@mui/icons-material';
 import { Dropdown, MenuItem } from '@mui/base';
 import { InputBox, StyledAppBar, StyledDropDownMenu, StyledMenuButton, StyledToolbar } from './navbarStyles';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchValue } from '../../redux/userSlice';
 
 
 const Navbar = ({handleDrawer}) => {
-  const [searchText,setSearchText]= useState("") 
+  const {searchValue} = useSelector(state => state.user)
+  const [searchVal, setSearchVal] = useState(searchValue)
+  const dispatch = useDispatch()
+
+  const handleChange = (e)=>{
+    setSearchVal(e.target.value)
+    dispatch(setSearchValue(e.target.value))
+  }
+
 
   return (
     <div>
@@ -23,10 +32,10 @@ const Navbar = ({handleDrawer}) => {
             <InputBase 
               placeholder='Search...' 
               fullWidth={true} 
-              value={searchText} 
-              onChange={(e)=>setSearchText(e.target.value)}
+              value={searchVal}
+              onChange={handleChange}
             />
-            <Close color='action' onClick={()=>setSearchText("")}/>
+            <Close color='action' onClick={()=>dispatch(setSearchValue(""))}/>
           </InputBox>
 
           <Dropdown>
@@ -41,7 +50,6 @@ const Navbar = ({handleDrawer}) => {
 
         </StyledToolbar>
       </StyledAppBar> 
-      <Outlet/>
     </div>
   )
 }

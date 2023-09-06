@@ -11,7 +11,10 @@ axios.defaults.baseURL = 'http://localhost:9000/'
 
 const ListUsers = () => {
   const dispatch = useDispatch()
-  const {data} = useSelector(state => state.user)
+
+  const {data, searchValue} = useSelector(state => state.user)
+
+  const filteredData = data? data.filter(user => user.name.toLowerCase().includes(searchValue)):null
 
   useEffect(()=>{
     axios.get('api/user')
@@ -34,7 +37,7 @@ const ListUsers = () => {
           flexWrap='wrap'
           justifyContent='center'
         >
-          {data ? data.map(user=>(
+          {filteredData ? filteredData.map(user=>(
             <UserCard key={user._id} user={user}/>
           ))
           :

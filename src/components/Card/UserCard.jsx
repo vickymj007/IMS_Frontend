@@ -1,12 +1,13 @@
 import React from 'react'
 import image from '../../assets/avatar/Avatar-1.png'
-import { DeleteOutline, EditNote, Face, Face3 } from '@mui/icons-material'
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material'
+import { DeleteOutline, EditNote, Face, Face3, FacebookRounded, Instagram, Twitter, YouTube } from '@mui/icons-material'
+import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { deleteInfluencer } from '../../redux/userSlice'
 import { useNavigate } from 'react-router-dom'
+import { colors } from './colors'
 
 const UserCard = ({user}) => {
     const dispatch = useDispatch()
@@ -27,10 +28,12 @@ const UserCard = ({user}) => {
     }
 
   return (
-    <Card sx={{maxWidth:300,width:"100%"}}>
+    <Card sx={{maxWidth:280,width:"100%"}}>
         <CardHeader
             avatar={
-            <Avatar>{user.name[0].toUpperCase()}</Avatar>
+            <Avatar sx={{
+                background:colors[user.category]
+            }}>{user.name[0].toUpperCase()}</Avatar>
             }
             action={
             <IconButton onClick={()=>handleDelete(user._id)}>
@@ -43,11 +46,17 @@ const UserCard = ({user}) => {
         <CardMedia
             sx={{objectFit:'contain'}}
             component='img'
-            height={194}
+            height={184}
             alt='avatar'
             image={image}
         />
-        <CardContent>
+        <CardContent 
+            sx={{
+                display:'flex',
+                justifyContent:'space-between',
+                alignItems:'center'
+            }}
+        >
             <Typography 
                 variant="body1" 
                 color="text.primary"
@@ -65,10 +74,34 @@ const UserCard = ({user}) => {
                 {user.followers.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} Followers
             </Typography>
         </CardContent>
-        <CardActions>
-            <Button 
+        <CardActions
+            sx={{
+                display:'flex',
+                justifyContent:'space-between'
+            }}
+        >
+            <Box>
+                <IconButton color='primary'>
+                    <FacebookRounded/>
+                </IconButton>
+                <IconButton color='secondary'>
+                    <Instagram/>
+                </IconButton>
+                <IconButton color='primary'>
+                    <Twitter/>
+                </IconButton>
+                <IconButton color='error'>
+                    <YouTube/>
+                </IconButton>
+            </Box>
+            <Button
                 onClick={()=>handleEdit(user._id)}
-                sx={{background:"#31263e"}}
+                sx={{
+                    background:"#31263e",
+                    "&:hover":{
+                        background:"#44355b"
+                    }
+                }}
                 endIcon={<EditNote/>} 
                 variant='contained' 
                 disableElevation
