@@ -22,8 +22,7 @@ export const StyledToolbar = styled(Toolbar)({
 export const InputBox = styled(Box)({
     background:"#44355b",
     padding:'0 5px',
-    maxWidth:'380px',
-    width:"100%",
+    width:"50%",
     "& input":{
       color:"#fff",
     }
