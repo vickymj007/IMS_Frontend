@@ -1,20 +1,22 @@
-import React, { useState } from 'react'
-import { InputBase, Typography} from '@mui/material'
+import {InputBase, Typography} from '@mui/material'
 import {Menu, Close,Sort} from '@mui/icons-material';
 import { Dropdown, MenuItem } from '@mui/base';
 import { InputBox, StyledAppBar, StyledDropDownMenu, StyledMenuButton, StyledToolbar } from './navbarStyles';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSearchValue } from '../../redux/userSlice';
+import { setSearchValue, setSortBy } from '../../redux/userSlice';
 
 
 const Navbar = ({handleDrawer}) => {
   const {searchValue} = useSelector(state => state.user)
-  const [searchVal, setSearchVal] = useState(searchValue)
+  
   const dispatch = useDispatch()
 
   const handleChange = (e)=>{
-    setSearchVal(e.target.value)
     dispatch(setSearchValue(e.target.value))
+  }
+
+  const handleSort =(e)=>{
+    dispatch(setSortBy(e.target.innerText))
   }
 
 
@@ -32,7 +34,7 @@ const Navbar = ({handleDrawer}) => {
             <InputBase 
               placeholder='Search...' 
               fullWidth={true} 
-              value={searchVal}
+              value={searchValue}
               onChange={handleChange}
             />
             <Close color='action' onClick={()=>dispatch(setSearchValue(""))}/>
@@ -41,10 +43,11 @@ const Navbar = ({handleDrawer}) => {
           <Dropdown>
             <StyledMenuButton>Sort <Sort/></StyledMenuButton>
             <StyledDropDownMenu>
-              <MenuItem>Name</MenuItem>
-              <MenuItem>Social media handler</MenuItem>
-              <MenuItem>Highest followers</MenuItem>
-              <MenuItem>Lowest followers</MenuItem>
+              <MenuItem value='name' onClick={handleSort}>Name</MenuItem>
+              <MenuItem value='social-media' onClick={handleSort}>Social media handler</MenuItem>
+              <MenuItem value='highest-followers' onClick={handleSort}>Highest followers</MenuItem>
+              <MenuItem value='highest-followers' onClick={handleSort}>Lowest followers</MenuItem>
+              <MenuItem value='default' onClick={handleSort}>Default</MenuItem>
             </StyledDropDownMenu>
           </Dropdown>
 

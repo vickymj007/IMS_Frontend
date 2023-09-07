@@ -7,14 +7,45 @@ import { setData } from '../../redux/userSlice'
 import { toast } from 'react-hot-toast'
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:9000/'
+axios.defaults.baseURL = 'https://influencer-management-system-o1r1.onrender.com/'
 
 const ListUsers = () => {
   const dispatch = useDispatch()
 
-  const {data, searchValue} = useSelector(state => state.user)
+  const {data, searchValue, sortBy} = useSelector(state => state.user)
 
-  const filteredData = data? data.filter(user => user.name.toLowerCase().includes(searchValue)):null
+  const filteredData = data? 
+  data.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase().trim()))
+  .sort((a,b)=>{
+    switch(sortBy){
+      case "Name":
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+
+      case "Highest followers":
+        return b.followers - a.followers
+      case "Lowest followers":
+        return a.followers - b.followers
+      case "Social media handler":
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      case "Default":
+        return 0
+      default:
+        return 0
+    }
+  })
+  :null
 
   useEffect(()=>{
     axios.get('api/user')

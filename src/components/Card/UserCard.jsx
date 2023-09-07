@@ -1,5 +1,6 @@
 import React from 'react'
-import image from '../../assets/avatar/Avatar-1.png'
+import femaleImg from '../../assets/avatar/Avatar-1.png'
+import maleImg from '../../assets/avatar/Avatar-2.png'
 import { DeleteOutline, EditNote, Face, Face3, FacebookRounded, Instagram, Twitter, YouTube } from '@mui/icons-material'
 import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material'
 import axios from 'axios'
@@ -48,7 +49,7 @@ const UserCard = ({user}) => {
             component='img'
             height={184}
             alt='avatar'
-            image={image}
+            image={user.gender === 'male'? maleImg : femaleImg}
         />
         <CardContent 
             sx={{
