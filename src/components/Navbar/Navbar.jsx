@@ -4,6 +4,7 @@ import { Dropdown, MenuItem } from '@mui/base';
 import { InputBox, StyledAppBar, StyledDropDownMenu, StyledMenuButton, StyledToolbar } from './navbarStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchValue, setSortBy } from '../../redux/userSlice';
+import './navbar.css'
 
 
 const Navbar = ({handleDrawer}) => {
